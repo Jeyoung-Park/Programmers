@@ -1,0 +1,16 @@
+import java.util.HashMap;
+
+class Solution {
+    public int solution(String[][] clothes) {
+        HashMap<String, Integer> hashmap=new HashMap<>();
+        for(int i=0;i<clothes.length;i++) {
+        	if(hashmap.containsKey(clothes[i][1])) hashmap.replace(clothes[i][1], hashmap.get(clothes[i][1])+1);
+        	else hashmap.put(clothes[i][1], 1);
+        }
+        int answer=1;
+        for(int n:hashmap.values()) {
+        	answer*=(n+1);
+        }
+        return answer-1;
+    }
+}
