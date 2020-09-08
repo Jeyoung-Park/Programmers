@@ -1,0 +1,73 @@
+import java.util.*;
+import java.util.Map.Entry;
+
+class Solution {
+	
+	class Song implements Comparable<Song>{
+		int id, play;
+		String genre;
+		
+		Song(int id, int play, String genre){
+			this.id=id;
+			this.play=play;
+			this.genre=genre;
+		}
+
+		@Override
+		public int compareTo(Song o) {
+			// TODO Auto-generated method stub
+			if(this.play==o.play) {
+				return this.id-o.id;
+			}
+			else {
+				return o.play-this.play;
+			}
+		}
+		
+		
+	}
+	
+    public int[] solution(String[] genres, int[] plays) {
+       ArrayList<Integer> result=new ArrayList<>();
+       ArrayList<Song> songList=new ArrayList<>();
+       HashMap<String, Integer> gMap=new HashMap<>();
+       HashMap<String, Integer> pMap=new HashMap<>();
+       
+       for(int i=0;i<genres.length;i++) {
+    	   songList.add(new Song(i, plays[i], genres[i]));
+    	   
+    	   if(gMap.containsKey(genres[i])) gMap.replace(genres[i], gMap.get(genres[i])+plays[i]);
+    	   else	gMap.put(genres[i], plays[i]);
+       }
+       
+       Collections.sort(songList, new Comparator<Song>() {
+
+		@Override
+		public int compare(Song o1, Song o2) {
+			if(o1.genre.equals(o2.genre)) return o1.compareTo(o2); //A.compareTo(B): A가 B보다 작으면 음수, 크면 양수, 같으면 0
+			else return gMap.get(o2.genre)-gMap.get(o1.genre);
+		}
+    	   
+       });
+       
+       for(Song s:songList) {
+    	   if(!pMap.containsKey(s.genre)) {
+    		   pMap.put(s.genre, 1);
+    		   result.add(s.id);
+    	   }
+    	   else {
+    		   if(pMap.get(s.genre)>=2) continue;
+    		   else {
+    			   pMap.replace(s.genre, pMap.get(s.genre)+1);
+    			   result.add(s.id);
+    		   }
+    	   }
+       }
+       
+       int[] arr_result=new int[result.size()];
+       for(int i=0;i<result.size();i++) {
+    	   arr_result[i]=result.get(i);
+       }
+       return arr_result;
+    }
+}
