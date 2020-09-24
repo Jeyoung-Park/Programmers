@@ -1,0 +1,40 @@
+import java.util.*;
+
+class Solution {
+	
+    public int[] solution(String[] operations) {
+        PriorityQueue<Integer> pq_max=new PriorityQueue<>(Comparator.reverseOrder());
+        PriorityQueue<Integer> pq_min=new PriorityQueue<>();
+        for(int i=0;i<operations.length;i++){
+            if(operations[i].charAt(0)=='I') {
+            	String temp=operations[i].substring(2);
+            	pq_max.add(Integer.parseInt(temp));
+            	pq_min.add(Integer.parseInt(temp));
+            }
+            else if(operations[i].equals("D 1")) {
+            	if(!pq_max.isEmpty())	{
+            		int max=pq_max.peek();
+            		pq_max.remove(max);
+            		pq_min.remove(max);
+            	}
+            }
+            else {
+            	if(!pq_min.isEmpty())	{
+            		int min=pq_min.peek();
+            		pq_min.remove(min);
+            		pq_max.remove(min);
+            	}
+            }
+        }
+        int[] answer=new int[2];
+        if(!pq_max.isEmpty()) {
+        	answer[0]=pq_max.poll();
+        	answer[1]=pq_min.poll();
+        }
+        else {
+        	answer[0]=answer[1]=0;
+        }
+        
+        return answer;
+    }
+}
