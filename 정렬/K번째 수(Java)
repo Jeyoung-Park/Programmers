@@ -1,0 +1,19 @@
+import java.util.*;
+
+class Solution {
+    public int[] solution(int[] array, int[][] commands) {
+        int[] answer = new int[commands.length];
+        for(int iter=0;iter<commands.length;iter++){
+            int i=commands[iter][0]-1;
+            int j=commands[iter][1]-1;
+            int k=commands[iter][2];
+            int[] arr_temp=new int[j-i+1];
+            for(int ii=0;ii<arr_temp.length;ii++){
+                arr_temp[ii]=array[i+ii];
+            }
+            Arrays.sort(arr_temp);
+            answer[iter]=arr_temp[k-1];
+        }
+        return answer;
+    }
+}
