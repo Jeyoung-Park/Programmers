@@ -1,0 +1,48 @@
+import java.util.*;
+
+class Solution {
+	
+	static boolean index_check[], number_check[];
+	static int arr[];
+	static int sum=0;
+	
+    public int solution(String numbers) {
+    	arr=new int[numbers.length()];
+        index_check=new boolean[arr.length];
+        number_check=new boolean[10000000];
+        for(int i=0;i<arr.length;i++) {
+        	arr[i]=numbers.charAt(i)-'0';
+        }
+        for(int i=0;i<arr.length;i++) {
+        	index_check[i]=true;
+        	function(arr[i], 0);
+        	index_check[i]=false;
+        }
+        return sum;
+    }
+    
+    public boolean isPrime(int num) {
+    	if(num==0||num==1) return false;
+    	for(int i=2;i<num;i++) {
+    		if(num%i==0) return false;
+    	}
+    	return true;
+    }
+    
+    public void function(int num, int current) {
+//    	System.out.println(num +" / "+current);
+    	if(current==arr.length) return;
+    	if(isPrime(num)&&number_check[num]==false)	{
+//    		System.out.println(num);
+    		sum++;
+    	}
+    	number_check[num]=true;
+    	for(int i=0;i<arr.length;i++) {
+    		if(index_check[i]==false) {
+    			index_check[i]=true;
+    			function(10*num+arr[i], current+1);
+    			index_check[i]=false;
+    		}
+    	}
+    }
+}
