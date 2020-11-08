@@ -1,0 +1,31 @@
+import java.util.*;
+
+class Solution {
+    
+    public int solution(String name) {
+        int answer = 0;
+        for(int iter=0;iter<name.length();iter++){
+            answer+=getUpDown(name.charAt(iter));
+        }
+        int min = name.length()-1;
+        for ( int i = 0; i < name.length(); i ++ ) {
+			int index = i;
+			
+			if( name.charAt(index)=='A' ) {
+				while( index < name.length() && name.charAt(index)=='A') {
+					index++;
+				}
+				int moveCnt = ((i-1)*2) + name.length() - index;
+				min = Math.min(min, moveCnt);
+			}
+		}
+        return answer+min;
+    }
+    public int getUpDown(char c){
+        int temp=c-'A';
+        if(temp>=13){
+            temp=26-temp;
+        }
+        return temp;
+    }
+}
