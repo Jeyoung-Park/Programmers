@@ -1,0 +1,41 @@
+class Solution {
+
+    int answer;
+    boolean isCheck[];
+
+    public int solution(String begin, String target, String[] words) {
+        answer=51;
+        isCheck=new boolean[words.length];
+        boolean flag=false;
+        for(String word:words){
+            if(word.equals(target)) flag=true;
+        }
+        // for(int i=0;i<words.length;i++){
+        //     if(words[i].equals(target)) flag=true;
+        // }
+        if(!flag) return 0;
+        dfs(begin, target, 0, words);
+        return answer;
+    }
+    public void dfs(String current, String target, int count, String[] words){
+        if(current.equals(target)){
+            answer=Math.min(answer, count);
+            return;
+        }
+        for(int i=0;i<words.length;i++){
+            if(!isCheck[i]&&check(current, words[i])){
+                isCheck[i]=true;
+                dfs(words[i], target, count+1, words);
+                isCheck[i]=false;
+            }
+        }
+    }
+
+    public boolean check(String current, String next){
+        int cnt=0;
+        for(int i=0;i<current.length();i++){
+            if(current.charAt(i)!=next.charAt(i)) cnt++;
+        }
+        return cnt==1?true:false;
+    }
+}
